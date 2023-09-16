@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import ContactList from 'components/ContactList/ContactList';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from 'redux/contacts/contactsOperations';
 import { getContacts } from 'redux/contacts/contactsSelectors';
 
+import Loader from 'Services/Loader/Loader';
 import ContactsForm from 'components/ContactsForm/ContactsForm';
 import Filter from 'components/Filter/Filter';
 import { H1 } from './Contacts.styled';
@@ -12,9 +13,11 @@ import { H1 } from './Contacts.styled';
 const Contacts = () => {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
+  const [isMounting, setIsMounting] = useState(true);
 
   useEffect(() => {
     dispatch(fetchContacts());
+    setIsMounting(false);
   }, [dispatch]);
 
   return (
@@ -23,7 +26,9 @@ const Contacts = () => {
       <ContactsForm />
       <h2>Contacts</h2>
 
-      {contacts.length > 0 ? (
+      {isMounting ? (
+        <Loader />
+      ) : contacts.length > 0 ? (
         <>
           <Filter />
           <ContactList />

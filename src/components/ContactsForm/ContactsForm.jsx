@@ -1,8 +1,14 @@
+import Loader from 'Services/Loader/Loader';
 import { nanoid } from 'nanoid';
+import { Notify } from 'notiflix';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/contactsOperations';
-import { getContacts } from 'redux/contacts/contactsSelectors';
+import {
+  getAddingContactStatus,
+  getContacts,
+  getIsAddingContact,
+} from 'redux/contacts/contactsSelectors';
 import { Button, Form, Input, Label } from '../../Services/Styles/Form.styled';
 
 export default function ContactsForm() {
@@ -10,6 +16,8 @@ export default function ContactsForm() {
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
+  const isAddingContact = useSelector(getIsAddingContact);
+  const addingContactStatus = useSelector(getAddingContactStatus);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -28,12 +36,15 @@ export default function ContactsForm() {
       .join(' ');
 
     if (isIncluded) {
-      alert(`${NameToTitleCase} is already in contacts.`);
+      Notify.failure(`${NameToTitleCase} is already in contacts.`);
     } else {
       dispatch(addContact(newContact));
+    }
 
+    if (addingContactStatus === 201) {
       setName('');
       setNumber('');
+      Notify.success(`${name} successfully added to your list.`);
     }
 
     e.target.reset();
@@ -69,7 +80,13 @@ export default function ContactsForm() {
           required
         />
       </Label>
-      <Button type="submit">Add to contacts'</Button>
+      <Button type="submit">
+        {isAddingContact ? (
+          <Loader width="16" height="16" color="black" />
+        ) : (
+          'Add to contacts'
+        )}
+      </Button>
     </Form>
   );
 }

@@ -6,7 +6,15 @@ import { fetchContactsReducer } from './reducers/fetchContactsReducer';
 const initialState = {
   contacts: {
     items: [],
-    isLoading: false,
+    isLoadingContacts: false,
+    addingContact: {
+      isAddingContact: false,
+      addingContactStatus: null,
+    },
+    deletingContact: {
+      isDeletingContact: false,
+      deletingStatusCode: null,
+    },
     error: null,
   },
   filter: '',

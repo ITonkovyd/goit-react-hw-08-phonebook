@@ -1,16 +1,15 @@
 import { ThreeCircles } from 'react-loader-spinner';
 
-const Loader = () => {
+const Loader = ({ height = '100', width = '100', color = '#4fa94d' }) => {
   return (
     <ThreeCircles
-      height="100"
-      width="100"
-      color="#4fa94d"
+      height={height}
+      width={width}
+      color={color}
       wrapperStyle={{
-        display: 'flex',
+        display: 'block',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '10px',
       }}
       wrapperClass=""
       visible={true}
