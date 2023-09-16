@@ -2,10 +2,7 @@ import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/contactsOperations';
-import {
-  getContacts,
-  getLoadingStatus,
-} from 'redux/contacts/contactsSelectors';
+import { getContacts } from 'redux/contacts/contactsSelectors';
 import { Button, Form, Input, Label } from '../../Services/Styles/Form.styled';
 
 export default function ContactsForm() {
@@ -13,7 +10,6 @@ export default function ContactsForm() {
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  const isLoading = useSelector(getLoadingStatus);
 
   function handleSubmit(e) {
     e.preventDefault();
