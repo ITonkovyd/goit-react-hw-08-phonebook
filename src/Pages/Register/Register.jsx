@@ -34,9 +34,6 @@ const Register = () => {
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(register({ name, email, password }));
-    setName('');
-    setEmail('');
-    setPassword('');
   };
 
   return (

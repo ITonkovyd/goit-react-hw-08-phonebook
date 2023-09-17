@@ -1,7 +1,7 @@
 import Loader from 'Services/Loader/Loader';
 import { nanoid } from 'nanoid';
 import { Notify } from 'notiflix';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/contactsOperations';
 import {
@@ -18,6 +18,13 @@ export default function ContactsForm() {
   const contacts = useSelector(getContacts);
   const isAddingContact = useSelector(getIsAddingContact);
   const addingContactStatus = useSelector(getAddingContactStatus);
+
+  useEffect(() => {
+    if (addingContactStatus === 201) {
+      setName('');
+      setNumber('');
+    }
+  }, [addingContactStatus]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -39,12 +46,6 @@ export default function ContactsForm() {
       Notify.failure(`${NameToTitleCase} is already in contacts.`);
     } else {
       dispatch(addContact(newContact));
-    }
-
-    if (addingContactStatus === 201) {
-      setName('');
-      setNumber('');
-      Notify.success(`${name} successfully added to your list.`);
     }
 
     e.target.reset();

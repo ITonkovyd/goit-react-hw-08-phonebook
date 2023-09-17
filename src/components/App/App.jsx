@@ -1,3 +1,5 @@
+import AppHeader from 'components/AppHeader/AppHeader';
+import ErrorPage from 'components/ErrorPage/ErrorPage';
 import { PrivateRoute } from 'components/Routes/PrivateRoute';
 import { RestrictedRoute } from 'components/Routes/RestrictedRoute';
 import { lazy, useEffect } from 'react';
@@ -5,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { refresh } from 'redux/auth/authOperations';
 import { getIsRefreshing } from 'redux/auth/authSelectors';
-import AppHeader from '../AppHeader/AppHeader';
 import { Container } from './App.styled';
 
 const Layout = lazy(() => import('../Layout/Layout'));
@@ -47,8 +48,8 @@ export function App() {
                 <PrivateRoute component={Contacts} redirectTo="/login" />
               }
             />
+            <Route path="*" element={<ErrorPage />} />
           </Route>
-          <Route path="*" element={<Layout />} />
         </Routes>
       </Container>
     )

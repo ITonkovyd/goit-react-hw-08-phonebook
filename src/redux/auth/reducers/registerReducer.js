@@ -7,6 +7,7 @@ export const registerUser = builder => {
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
+      state.responseStatus = action.payload.status;
     })
     .addCase(register.rejected, (state, action) => state);
 };

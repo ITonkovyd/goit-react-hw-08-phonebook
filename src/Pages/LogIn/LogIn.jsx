@@ -30,8 +30,6 @@ const LogIn = () => {
     e.preventDefault();
 
     dispatch(login({ email, password }));
-    setEmail('');
-    setPassword('');
   };
 
   return (
