@@ -1,18 +1,26 @@
 import Loader from 'Services/Loader/Loader';
 import { PropTypes } from 'prop-types';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from 'redux/contacts/contactsOperations';
+import { getIsDeletingContact } from 'redux/contacts/contactsSelectors';
 import contact from '../../Services/images/contact.png';
 import { Button, Div, Li, Span } from './ContactItem.styled';
 
 export default function ContactItem({ id, name, number }) {
-  const dispatch = useDispatch();
   const [isClicked, setIsClicked] = useState(false);
+  const dispatch = useDispatch();
+  const isDeletingContacts = useSelector(getIsDeletingContact);
+
+  useEffect(() => {
+    if (!isDeletingContacts) {
+      setIsClicked(false);
+    }
+  }, [isDeletingContacts]);
 
   const handleDeleteContact = contactData => {
-    dispatch(deleteContact(contactData));
     setIsClicked(true);
+    dispatch(deleteContact(contactData));
   };
 
   return (

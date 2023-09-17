@@ -13,7 +13,6 @@ const initialState = {
     },
     deletingContact: {
       isDeletingContact: false,
-      deletingStatusCode: null,
     },
     error: null,
   },

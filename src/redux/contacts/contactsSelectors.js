@@ -14,8 +14,6 @@ export const getAddingContactStatus = state =>
 // delete contact
 export const getIsDeletingContact = state =>
   state.contacts.contacts.deletingContact.isDeletingContact;
-export const getDeletingStatusCode = state =>
-  state.contacts.contacts.deletingContact.deletingStatusCode;
 
 export const getError = state => state.contacts.contacts.error;
 export const getFilter = state => state.contacts.filter;
