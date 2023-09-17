@@ -1,4 +1,5 @@
 import Loader from 'Services/Loader/Loader';
+import { notifyOptions } from 'Services/Notify/NotifyStyles';
 import { nanoid } from 'nanoid';
 import { Notify } from 'notiflix';
 import { useEffect, useState } from 'react';
@@ -43,7 +44,10 @@ export default function ContactsForm() {
       .join(' ');
 
     if (isIncluded) {
-      Notify.failure(`${NameToTitleCase} is already in contacts.`);
+      Notify.failure(
+        `${NameToTitleCase} is already in contacts.`,
+        notifyOptions
+      );
     } else {
       dispatch(addContact(newContact));
     }

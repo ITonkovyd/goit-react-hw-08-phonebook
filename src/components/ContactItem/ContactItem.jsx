@@ -1,17 +1,18 @@
 import Loader from 'Services/Loader/Loader';
 import { PropTypes } from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contacts/contactsOperations';
-import { getIsDeletingContact } from 'redux/contacts/contactsSelectors';
 import contact from '../../Services/images/contact.png';
 import { Button, Div, Li, Span } from './ContactItem.styled';
 
 export default function ContactItem({ id, name, number }) {
   const dispatch = useDispatch();
-  const isDeletingContact = useSelector(getIsDeletingContact);
+  const [isClicked, setIsClicked] = useState(false);
 
   const handleDeleteContact = contactData => {
     dispatch(deleteContact(contactData));
+    setIsClicked(true);
   };
 
   return (
@@ -25,11 +26,7 @@ export default function ContactItem({ id, name, number }) {
       </Div>
 
       <Button type="button" onClick={() => handleDeleteContact({ id, name })}>
-        {isDeletingContact ? (
-          <Loader width="16" height="16" color="black" />
-        ) : (
-          'Delete'
-        )}
+        {isClicked ? <Loader width="16" height="16" color="black" /> : 'Delete'}
       </Button>
     </Li>
   );

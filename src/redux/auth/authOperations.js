@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { notifyOptions } from 'Services/Notify/NotifyStyles';
 import axios from 'axios';
 import { Notify } from 'notiflix';
 
@@ -21,7 +22,8 @@ export const register = createAsyncThunk(
       return data;
     } catch (error) {
       Notify.failure(
-        'Oups, seems like user with this email or username already registered.'
+        'Oups, seems like user with this email or username already registered.',
+        notifyOptions
       );
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -36,7 +38,10 @@ export const login = createAsyncThunk(
       setAuthHeader(data.token);
       return data;
     } catch (error) {
-      Notify.failure('Oups, seems like this user is not regidtered.');
+      Notify.failure(
+        'Oups, seems like this user is not regidtered.',
+        notifyOptions
+      );
       return thunkAPI.rejectWithValue(error.message);
     }
   }
